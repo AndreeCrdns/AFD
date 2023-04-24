@@ -6,30 +6,16 @@ public class Archivos {
 
    FileReader lector;
    BufferedReader leerlinea;
-   
+
    public Archivos(String nombreArchivo) {
       try {
-          this.lector = new FileReader(nombreArchivo); //se crea objeto que lee el archivo
-          this.leerlinea = new BufferedReader(lector); // se crea el objeto leerlinea que lee el archivo linea por linea
-      } 
-      catch (IOException e) {
-      System.out.println("Error, no se pudo leer el archivo"); //si no se puede leer el archivo se lanza la excepción
+         this.lector = new FileReader(nombreArchivo); // se crea objeto que lee el archivo
+         this.leerlinea = new BufferedReader(lector); // se crea el objeto leerlinea que lee el archivo linea por linea
+      } catch (IOException e) {
+         System.out.println("Error, no se pudo leer el archivo"); // si no se puede leer el archivo se lanza la
+                                                                  // excepción
       }
    }
-
-   // File carpeta = new File(nombreCarpeta);
-   // File[] archivos = carpeta.listFiles();
-   // try {
-   // for (File archivo : archivos) {
-   // if (archivo.isFile()) {
-   // this.lector = new FileReader(archivo);
-   // this.leerlinea = new BufferedReader(lector);
-   // Aquí puedes hacer lo que necesites con cada archivo
-   // }
-   // }
-   // } catch (IOException e) {
-   // System.out.println("Error, no se pudo leer la carpeta");
-   // }
 
    public String[] lineapalabra() // Lee las palabras y las separa en un arreglo, hay restrincciones con #, si
                                   // esta vacia la liena y si es una cadena

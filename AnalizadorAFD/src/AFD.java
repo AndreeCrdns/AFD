@@ -3,64 +3,59 @@ import java.util.Scanner;
 
 public class AFD {
     private String[] alfabeto;
-    private int estados;
-    private int[] finales;
-    private int[][] tabla;
-    int simboloIndex = 0;
+    private int estados = 0;
+    private int[] finales = new int [1000];
+    private int[][] tabla = new int[1000][1000];
+    int simboloIndex = -1;
     String archivo;
 
     public AFD(String archivo) {
         this.archivo = archivo;
-        Rellenar(archivo);
+        leerAFD(archivo);
     }
 
-    private boolean Rellenar(String archivo) {
+    private boolean leerAFD(String archivo) {
         try {
             File arcAFD = new File(archivo);
             Scanner sc = new Scanner(arcAFD);
-
-            alfabeto = sc.nextLine().split(", ");
+    
+            alfabeto = sc.nextLine().split(",");
             for (int i = 0; i < alfabeto.length; i++) {
-                for (int j = i + 1; j < alfabeto.length; i++) {
+                for (int j = i + 1; j < alfabeto.length; j++) {
                     if (alfabeto[i].equals(alfabeto[j])) {
                         System.out.println("Error, no se puede repetir los caracteres");
-                        System.out.println(0);
                     }
                 }
             }
-            try {
-                estados = Integer.parseInt(sc.nextLine());
-            } catch (Exception e) {
-                System.out.println("Error al leer el numero de estados");
-            }
-
-            String[] linea = sc.nextLine().split(", ");
-            finales = new int[100];
+    
+            estados = Integer.parseInt(sc.nextLine());
+    
+            String[] linea = sc.nextLine().split(",");
+            finales = new int[1000];
             for (int i = 0; i < linea.length; i++) {
                 finales[i] = Integer.parseInt(linea[i]);
                 if (finales[i] >= estados) {
                     System.out.println("Error, el estado final no se encuentra entre los estados");
                 }
             }
-            tabla = new int[100][100];
-            while (sc.hasNext()) {
-                try {
-                    for (int i = 0; i < estados; i++) {
-                        for (int j = 0; j < alfabeto.length; j++) {
-                            tabla[i][j] = Integer.parseInt(sc.next());
-                        }
-                    }
-                } catch (Exception e) {
-                    System.out.println("Error en la tabla de transicion");
+    
+            tabla = new int[estados][alfabeto.length];
+            for (int i = 0; i < estados; i++) {
+                String[] fila = sc.nextLine().split(",");
+                for (int j = 0; j < alfabeto.length; j++) {
+                    tabla[i][j] = Integer.parseInt(fila[j]);
                 }
             }
+    
             sc.close();
         } catch (Exception e) {
-            System.out.println("Archivo no encontrado");
+            System.out.println("Error al leer el archivo");
+            return false;
         }
+    
         return true;
     }
-
+    
     public boolean pertenece(String cadena) {
         int estadoAct = 0;
         int estadoSig = 0;
@@ -68,7 +63,6 @@ public class AFD {
         boolean bandera2 = false;
         boolean match = false;
         String[] cadenaArr = cadena.split(" ");
-
         for (int i = 0; i < cadenaArr.length; i++) {
             match = false;
             for (int j = 0; j < alfabeto.length; j++) {
@@ -81,7 +75,7 @@ public class AFD {
             }
 
         }
-        for (int i = 0; i < cadenaArr.length; i++) {
+        for (int i = 0; i < estadoSig; i++) {
             for (int j = 0; j < alfabeto.length; j++) {
                 if (alfabeto[j].equals(cadenaArr[i])) {
                     simboloIndex = j;
@@ -105,4 +99,5 @@ public class AFD {
         }
         return true;
     }
+
 }

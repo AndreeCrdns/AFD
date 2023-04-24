@@ -1,3 +1,5 @@
+import java.io.File;
+
 public class Lista { // crea la lista
 
     Nodo raiz;
@@ -37,7 +39,25 @@ public class Lista { // crea la lista
             } while (aux != null && valid == "ERROR");
             return valid;
         } else {
-            return "Lista de tokens vacia";
+            return "Lista de AFD vacia";
+        }
+    }
+
+    public void llenar(String nombreCarpeta) // lee el archivo y llena la lista de tokens
+    {
+        File carpeta = new File(nombreCarpeta);
+        File[] archivos = carpeta.listFiles();
+
+        for (File archivo : archivos) {
+            if (archivo.isFile() && archivo.getName().endsWith(".txt")) {
+                try {
+                    String nombre = archivo.getName().substring(0, archivo.getName().lastIndexOf("."));
+                    AFD afd = new AFD(archivo.toString());
+                    this.insertar(nombre, afd);
+                } catch (Exception e) {
+                    System.out.println("Error en el llenado de la lista");
+                }
+            }
         }
     }
 }
