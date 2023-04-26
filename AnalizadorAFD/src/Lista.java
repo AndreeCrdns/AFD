@@ -22,7 +22,7 @@ public class Lista { // crea la lista
             raiz = nuevo; // primer nodo
             fin = nuevo;
         } else {
-            fin.setSig(nuevo);
+            fin.setSig(nuevo); 
             fin = fin.getSig();
         }
     }

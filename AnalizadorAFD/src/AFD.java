@@ -6,7 +6,6 @@ public class AFD {
     private int estados = 0;
     private int[] finales;
     private int[][] tabla;
-    int simboloIndex = 0;
     String archivo;
 
     public AFD(String archivo) {
@@ -82,38 +81,38 @@ public class AFD {
     public boolean pertenece(String cadena) {
         int estadoAct = 0;
         int estadoSig = 0;
-        boolean bandera = false;
-        boolean bandera2 = false;
+        boolean encontradoCad = false;
+        boolean encontradoEstadoF = false;
         boolean match = false;
         char[] cadenaArr = cadena.replaceAll(" ", "").toCharArray();
-        //Verfica que la cadena empiece con el estado inicial
-        for (int i = 0; i < cadenaArr.length; i++) { 
-            match = false;
-            for (int j = 0; j < alfabeto.length; j++) { //Se recorre el arreglo alfabeto y se compara 
-                if (alfabeto[j] == cadenaArr[i]) { //Si el caracter actual de la cadena de entrada es igual al del caracter alfabeto
-                    match = true; //Se establece la variable match a true
-                    estadoSig = j; //Se asigna el estado siguiente con la variable j 
+        // Verfica que la cadena empiece con el estado inicial
+        for (int i = 0; i < cadenaArr.length; i++) {
+            for (int j = 0; j < alfabeto.length; j++) { // Se recorre el arreglo alfabeto y se compara
+                if (alfabeto[j] == cadenaArr[i]) { // Si el caracter actual de la cadena de entrada es igual al del
+                                                   // caracter alfabeto
+                    match = true; // Se establece la variable match a true
+                    estadoSig = j; // Se asigna el estado siguiente con la variable j
                 }
             }
             if (match == false) {
                 return false;
             }
-            estadoSig = tabla[estadoAct][estadoSig]; //
+            estadoSig = tabla[estadoAct][estadoSig]; // recorrer la tabla de transiciones
             estadoAct = estadoSig;
-
         }
-        //Se comprueba si el estado actual concide con un estado final si es asi regresa un true que significa que coincide o pertenece
+        // Se comprueba si el estado actual concide con un estado final si es asi
+        // regresa un true que significa que coincide o pertenece
         for (int l = 0; l < finales.length; l++) {
             if (estadoAct == finales[l]) {
-                bandera = true;
+                encontradoCad = true;
             } else {
-                bandera2 = true;
+                encontradoEstadoF = true;
             }
         }
-        if (bandera == true) {
+        if (encontradoCad == true) {
             return true;
         }
-        if (bandera2 == true && bandera != true) {
+        if (encontradoEstadoF == true && encontradoCad != true) {
             return false;
         }
         return true;

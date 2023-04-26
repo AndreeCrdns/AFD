@@ -15,7 +15,7 @@ public class Nodo { // clase nodo hace el espacio para guardar los datos
         this.dato = new Token(nombre, patron); // constructor para crear nuevo nodo para que el nodo tenga un token
     }
 
-    public String validarC(String cadena) { // validar lo que hay dentro del
+    public String validarC(String cadena) { // validar lo que hay dentro del token
         try {
             return dato.Validar(cadena);
         } catch (Exception e) { // la excepcion de matcher se resuelve hasta el nodo
