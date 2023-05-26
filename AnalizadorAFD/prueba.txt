@@ -1,2 +1,19 @@
-variable =
-+
+variable  55555 # Comentario
+variable edad entero
+variable nombre texto
+edad = 25
+nombre = "Juan"
+validar_edad ( mensaje , edad )
+funcion saludar ( nombre )
+imprimir ( "Hola," + nombre )
+devolver
+validar_edad ( mensaje , edad )
+si edad > 18 entonces
+imprimir ( "Eres mayor de edad" )
+sino
+imprimir ( "Eres menor de edad" )
+saludar ( nombre )
+CAFA021017HBCRLNA5
+CAUC7403314Q0
+2020-02-04T12:20:20
+2020-04-05

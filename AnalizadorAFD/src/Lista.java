@@ -5,8 +5,6 @@ public class Lista { // crea la lista
     Nodo raiz;
     Nodo fin;
 
-    // metodos, llenar, insertar, vaciar, vacio, validarlexema
-
     public boolean vacio() {
         return raiz == null;
     }
@@ -22,13 +20,12 @@ public class Lista { // crea la lista
             raiz = nuevo; // primer nodo
             fin = nuevo;
         } else {
-            fin.setSig(nuevo); 
+            fin.setSig(nuevo);
             fin = fin.getSig();
         }
     }
 
-    public String validarCad(String cadena) // recorre la lista hasta que encuentre el token al que le corresponde la
-                                            // cadena
+    public String validarCad(String cadena) // recorre la lista hasta que encuentre el token al que le corresponde la cadena
     { // error saldria si la lista estuviera vacia
         String valid = null; // valid hace funcion del nombre del token
         if (!vacio()) {
@@ -46,14 +43,14 @@ public class Lista { // crea la lista
     public void llenar(String nombreCarpeta) // lee el archivo y llena la lista de tokens
     {
         File carpeta = new File(nombreCarpeta);
-        File[] archivos = carpeta.listFiles();
+        File[] archivosCarp = carpeta.listFiles();
 
-        for (File archivo : archivos) {
+        for (File archivo : archivosCarp) {
             if (archivo.isFile() && archivo.getName().endsWith(".txt")) {
                 try {
                     String nombre = archivo.getName().substring(0, archivo.getName().lastIndexOf("."));
-                    AFD afd = new AFD(archivo.toString());
-                    this.insertar(nombre, afd);
+                    AFD patronAFD = new AFD(archivo.toString());
+                    this.insertar(nombre, patronAFD);
                 } catch (Exception e) {
                     System.out.println("Error en el llenado de la lista");
                 }
