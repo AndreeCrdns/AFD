@@ -1,0 +1,171 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Linea, Comillas, Tentero, Tdecimal, Tsimbolo, Ttexto, TLogico, 
+    Tfechahora, Tfecha, Thora, Trfc, Tcurp, Variables, Variable, 
+    CodigoPrincipal, Funciones, Procedimientos, Funcion, Devolver, 
+    Procedimiento, Inicio, Fin, Si, Entonces, Sino, Para, Mientras, Romper, 
+    Imprimir, Igual, Suma, Resta, Multiplicacion, Division, Op_logico_and, 
+    Op_logico_or, Op_logico_not, Op_bitwise_and, Op_bitwise_or, MayorQue, 
+    MenorQue, Igualdad, Diferente, MayorIgual, MenorIgual, Hacer, Op_atribucion_suma, 
+    Op_atribucion_resta, Op_atribucion_multiplicacion, Hasta, Op_atribucion_division, 
+    Op_atribucion_modulo, Parentesis_a, Parentesis_c, Llave_a, Llave_c, 
+    Corchete_a, Corchete_c, P_coma, Cadena, Identificador, Numero, ERROR;
+
+non terminal PROGRAMA, BLOQUEVARIABLE, DVARIABLE, TIPODATO, BLOQUEFUNCION, 
+             DFUNCION, DIMPRIMIR, EXPRESION , BLOQUECODIGOPRINCIPAL, 
+             PARAMETROS, SENTENCIA, LLAMADOPROCEFUN, BLOQUEPROCEDIMIENTOS, 
+             DPROCEDIMIENTOS, DCODIGOPRINCIPAL, ASIGNACION,
+             SI, SINO, COMPARACION, NUMEID, SINGLE_SENTENCIA, SISENTENCIA, PARA, INSTRUPARA
+             , INSTRUMIENTRAS, SENTENCIAMIENTRAS
+             , SENTENCIACICLO, CONDICION, MIENTRAS;
+
+
+/*PROGRAMA donde se juntan todas las reglas*/
+PROGRAMA ::=
+    MIENTRAS
+;
+
+/*Bloque de la variable donde se definen todas las variables*/
+BLOQUEVARIABLE ::=
+    Variables DVARIABLE
+;
+
+/*Definicion de 1 o varias variables*/
+DVARIABLE ::=
+    Variable Identificador TIPODATO DVARIABLE |
+;
+/*Tipos de datos*/
+TIPODATO ::=
+    Tentero | Tdecimal | Tsimbolo | Ttexto | TLogico | Tfechahora | Tfecha | 
+    Thora | Trfc | Tcurp
+;
+/*Bloque del codigo prinicipal*/
+BLOQUECODIGOPRINCIPAL ::=
+    CodigoPrincipal
+    DCODIGOPRINCIPAL
+;
+
+/*Definicion del codigo prinicipal*/
+DCODIGOPRINCIPAL ::=
+    Inicio SENTENCIA Fin
+;
+
+/*Bloque donde se define una o ninguna funcion*/
+BLOQUEFUNCION ::=
+    Funciones DFUNCION |
+;
+
+/*Definicion de 1 funcion*/
+DFUNCION ::=
+    Funcion Identificador Parentesis_a PARAMETROS Parentesis_c Inicio SISENTENCIA 
+    Devolver Fin
+;
+
+/*Comparacion*/
+COMPARACION ::=
+    Igualdad | Diferente | MayorQue | MenorQue | MayorIgual | MenorIgual
+;
+/*Numero e Identificador*/
+NUMEID ::=
+    Numero | Identificador
+;
+
+/*Bloque de procedimientos*/
+BLOQUEPROCEDIMIENTOS ::=
+    Procedimientos DPROCEDIMIENTOS |
+;
+
+/*Definicion de 1 procedimientos*/
+DPROCEDIMIENTOS ::=
+    Procedimiento Identificador Parentesis_a PARAMETROS Parentesis_c Inicio 
+    SISENTENCIA Fin
+;
+
+SENTENCIA ::=
+    SINGLE_SENTENCIA |
+    SENTENCIA SINGLE_SENTENCIA
+;
+
+SINGLE_SENTENCIA ::=
+    ASIGNACION |
+    DIMPRIMIR |
+    LLAMADOPROCEFUN
+;
+SISENTENCIA ::=
+    SENTENCIA | SI
+;
+
+
+ASIGNACION ::=
+    Identificador Igual Cadena |
+    Identificador Igual Numero
+;
+
+DIMPRIMIR ::=
+    Imprimir Parentesis_a EXPRESION Parentesis_c
+;
+
+EXPRESION ::=
+    Cadena |
+    Identificador |
+    Cadena Suma EXPRESION |
+    Identificador Suma EXPRESION
+;
+
+SI ::=
+    Si NUMEID COMPARACION NUMEID Entonces SENTENCIA SINO
+;
+
+SINO ::=
+    Sino SENTENCIA |
+;
+
+LLAMADOPROCEFUN ::=
+    Identificador Parentesis_a PARAMETROS Parentesis_c
+;
+
+PARAMETROS ::=
+    Identificador PARAMETROS |
+    Identificador
+;
+
+PARA ::=
+    Para CONDICION INSTRUPARA
+;
+
+CONDICION ::=
+    NUMEID COMPARACION Numero Hasta Numero Hacer
+;
+
+INSTRUPARA ::=
+    Inicio SISENTENCIA Fin
+;
+
+MIENTRAS ::=
+    Mientras CONDICION INSTRUMIENTRAS
+;
+
+INSTRUMIENTRAS ::=
+    Inicio SENTENCIAMIENTRAS Fin
+;
+
+SENTENCIAMIENTRAS ::=
+    SISENTENCIA | Romper
+;
+
+
